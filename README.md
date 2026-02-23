@@ -48,61 +48,46 @@
 <code>
 import random
 
-class HealthMonitoringAgent:
-    def __init__(self, patient_data):
-        self.patient_data = patient_data
+performance = 0
 
-    def monitor_health(self):
-        while True:
-            current_health_state = self.sensors.get_health_state()
-            action = self.choose_action(current_health_state)
-            self.actuators.perform_action(action)
-            if self.choose_action(current_health_state)=="No specific action needed":
-                break
+rooms = {
+    "Room A": random.uniform(97, 102),
+    "Room B": random.uniform(97, 102)
+}
 
-    def choose_action(self, current_health_state):
-        # Example: A simple rule-based system for decision-making
-        if current_health_state['heart_rate'] > 120:
-            return "Alert healthcare provider: High heart rate detected"
-        elif current_health_state['blood_pressure'] > 140:
-            return "Alert healthcare provider: High blood pressure detected"
-        elif current_health_state['temperature'] > 38:
-            return "Recommend rest and monitor temperature"
-        else:
-            return "No specific action needed"
+location = random.choice(["Room A", "Room B"])
 
-class HealthSensors:
-    def get_health_state(self):
-        # Example: Simulate health data retrieval (replace with real data in a practical scenario)
-        return {
-            'heart_rate': random.randint(60, 150),
-            'blood_pressure': random.randint(90, 160),
-            'temperature': random.uniform(36.0, 38.5)
-        }
+print("Room Temperatures:")
+for room in rooms:
+    print(room, ":", round(rooms[room], 2), "°F")
 
-class HealthActuators:
-    def perform_action(self, action):
-        # Example: Print or log the action (in a real scenario, this might involve more complex actions)
-        print(action)
+print("\nAgent starting in", location)
 
-if __name__ == "__main__":
-    patient_data = {'patient_id': 123, 'name': 'John Doe', 'age': 35}
-    
-    health_sensors = HealthSensors()
-    health_actuators = HealthActuators()
-    
-    health_monitoring_agent = HealthMonitoringAgent(patient_data)
-    health_monitoring_agent.sensors = health_sensors
-    health_monitoring_agent.actuators = health_actuators
-    
-    health_monitoring_agent.monitor_health()
+def treat(room):
+    global performance
+    if rooms[room] > 98.5:
+        print(room, ": Patient unhealthy → Medicine prescribed")
+        performance += 1
+        rooms[room] = 98.5
+    else:
+        print(room, ": Patient healthy")
 
+treat(location)
+
+other_room = "Room A" if location == "Room B" else "Room B"
+print("Moving to", other_room)
+performance -= 1
+
+treat(other_room)
+
+print("\nFinal Performance:", performance)
 </code>
 </pre>
 
 <hr>
 <h3>OUTPUT</h3>
-<img width="735" height="340" alt="image" src="https://github.com/user-attachments/assets/6b6232bc-8e19-49f7-926e-798ac99919f2" />
+<img width="717" height="431" alt="image" src="https://github.com/user-attachments/assets/5c56d79f-5af8-4937-b3e1-bc233550cb9d" />
+
 
 <h3>RESULT</h3>
 Hence, the solution for the given AI problem is found.
